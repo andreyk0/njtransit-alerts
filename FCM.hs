@@ -33,7 +33,6 @@ itemMessage :: Args
             -> FCMMessage
 itemMessage Args{..} i@Item{..} = (
     (fcmTo .~ (Just argFcmTo)) .
-    (fcmTimeToLive .~ (Just 3600)) .
     (fcmNotification .~ (Just $ itemNotification i)) .
     (fcmData .~ (Just . Map.fromList) [("text", itemTitle <> itemDescription)]) .
     (fcmTimeToLive .~ (Just 3600)) -- 1h TTL
