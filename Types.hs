@@ -20,9 +20,10 @@ data Item =
        } deriving (Show)
 
 
--- | Equality by Guid
+-- | Compare by itemDescription, items with the same text
+-- are often re-published.
 instance Eq Item where
-  i1 == i2 = itemGuid i1 == itemGuid i2
+  i1 == i2 = itemDescription i1 == itemDescription i2
 
 
 -- | Ordering by pub date
