@@ -19,13 +19,8 @@ data Item =
        , itemPubDate :: UTCTime
        } deriving (Show)
 
-
--- | Compare by itemDescription, items with the same text
--- are often re-published.
 instance Eq Item where
-  i1 == i2 = itemDescription i1 == itemDescription i2
+  i1 == i2 = itemGuid i1 == itemGuid i2
 
-
--- | Ordering by pub date
 instance Ord Item where
-  compare i1 i2 = compare (itemPubDate i1) (itemPubDate i2)
+  compare i1 i2 = compare (itemGuid i1) (itemGuid i2)

@@ -21,7 +21,7 @@ import           Types
 sortAlertItems :: (Foldable f)
                => f Item
                -> [Item]
-sortAlertItems = sort . toList
+sortAlertItems = sortOn itemPubDate . toList
 
 
 filterAlertItems :: Args
