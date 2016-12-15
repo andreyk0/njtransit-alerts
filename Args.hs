@@ -19,6 +19,8 @@ data Args = Args { argVerbose :: !Bool
                  , argNJTLine :: !Text
                  , argLookBackTime :: !NominalDiffTime
                  , argFcmTo :: !Text
+                 , argFcmIcon :: !(Maybe Text)
+                 , argFcmColor :: !(Maybe Text)
                  , argAuthKey :: !Text
                  , argRefreshIntervalMicroseconds :: !Int
                  } deriving (Show)
@@ -46,6 +48,14 @@ parseArgs defAuthKey = Args
          ( long "fcm-to"
         <> short 'T'
         <> help "FCM 'to' (token or topic)." ))
+     <*> optional (fmap T.pack $ strOption
+         ( long "fcm-icon"
+        <> short 'I'
+        <> help "FCM notification icon." ))
+     <*> optional (fmap T.pack $ strOption
+         ( long "fcm-color"
+        <> short 'C'
+        <> help "FCM notification color #rrggbb." ))
      <*> (fmap T.pack $ strOption
          ( long "fcm-auth-key"
         <> short 'k'

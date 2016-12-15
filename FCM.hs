@@ -31,18 +31,21 @@ fcmSendItem args@Args{..} i = do
 itemMessage :: Args
             -> Item
             -> FCMMessage
-itemMessage Args{..} i@Item{..} = (
+itemMessage args@Args{..} i@Item{..} = (
     (fcmTo .~ (Just argFcmTo)) .
-    (fcmNotification .~ (Just $ itemNotification i)) .
+    (fcmNotification .~ (Just $ itemNotification args i)) .
     (fcmData .~ (Just . Map.fromList) [("text", itemTitle <> itemDescription)]) .
     (fcmTimeToLive .~ (Just 3600)) -- 1h TTL
   ) def
 
 
-itemNotification :: Item
+itemNotification :: Args
+                 -> Item
                  -> FCMNotification
-itemNotification Item{..} = (
+itemNotification Args{..} Item{..} = (
     (fcmTitle .~ (Just $ "NJT " <> itemTitle)) .
     (fcmBody .~ (Just itemDescription)) .
-    (fcmTag .~ (Just itemGuid))
+    (fcmTag .~ (Just itemGuid)) .
+    (fcmColor .~ argFcmColor) .
+    (fcmIcon .~ argFcmIcon)
   ) def
