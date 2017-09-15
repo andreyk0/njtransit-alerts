@@ -15,7 +15,7 @@
 # resolver:
 #  name: custom-snapshot
 #  location: "./custom-snapshot.yaml"
-resolver: lts-7.13
+resolver: lts-9.4
 
 # User packages to be built.
 # Various formats can be used as shown in the example below.
@@ -38,8 +38,8 @@ resolver: lts-7.13
 packages:
   - '.'
   - location:
-      git: https://github.com/andreyk0/fcm-client.git
-      commit: master
+      git: https://github.com/andreyk0/fcm-client
+      commit: f628e0374dfb03d57e915bba6e68edcf1c1eb17d
     extra-dep: true
 
 # Dependency packages to be pulled from upstream that are not in the resolver
