@@ -1,7 +1,3 @@
-{-# LANGUAGE BangPatterns       #-}
-{-# LANGUAGE OverloadedStrings  #-}
-{-# LANGUAGE RecordWildCards    #-}
-
 module Types (
   Item(..)
 ) where

@@ -27,9 +27,9 @@ sortAlertItems = sortOn itemPubDate . toList
 filterAlertItems :: Args
                  -> Set Item
                  -> IO (Set Item)
-filterAlertItems !Args{..} !is = do
+filterAlertItems Args{..} !is = do
   tNow <- getCurrentTime
   let cutoffTime = addUTCTime argLookBackTime tNow
       selLineSubstr = "selLine=" <> argNJTLine <> "#"
-      p Item{..} = (itemPubDate >= cutoffTime) && (T.isInfixOf selLineSubstr itemLink)
+      p Item{..} = (itemPubDate >= cutoffTime) && T.isInfixOf selLineSubstr itemLink
   return $ Set.filter p is

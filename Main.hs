@@ -39,8 +39,7 @@ refreshAlertItems !args !oldItems = do
   let newItems = Set.difference newFeed oldItems
 
   putStrLn $ "Sending alerts for " <> (show . Set.size) newItems <> "items ..."
-  forM_ (sortAlertItems newItems) $ \i -> do
-    fcmSendItem args i
+  forM_ (sortAlertItems newItems) $ \i -> fcmSendItem args i
 
   -- Keep all recent items around for de-duping
   filterAlertItems args $ Set.union newItems oldItems

@@ -1,4 +1,3 @@
-{-# LANGUAGE BangPatterns       #-}
 {-# LANGUAGE OverloadedStrings  #-}
 {-# LANGUAGE RecordWildCards    #-}
 
@@ -25,17 +24,17 @@ fcmSendItem :: Args
 fcmSendItem args@Args{..} i = do
   let m = itemMessage args i
   res <- fcmCallJSON (E.encodeUtf8 argAuthKey) m
-  putStrLn $ show res -- try to send, ignore errs
+  print res -- try to send, ignore errs
 
 
 itemMessage :: Args
             -> Item
             -> FCMMessage
 itemMessage args@Args{..} i@Item{..} = (
-    (fcmTo .~ (Just argFcmTo)) .
+    (fcmTo .~ Just argFcmTo) .
     (fcmNotification .~ (Just $ itemNotification args i)) .
     (fcmData .~ (Just . Map.fromList) [("text", itemTitle <> itemDescription)]) .
-    (fcmTimeToLive .~ (Just 3600)) -- 1h TTL
+    (fcmTimeToLive .~ Just 3600) -- 1h TTL
   ) def
 
 
@@ -44,8 +43,8 @@ itemNotification :: Args
                  -> FCMNotification
 itemNotification Args{..} Item{..} = (
     (fcmTitle .~ (Just $ "NJT " <> itemTitle)) .
-    (fcmBody .~ (Just itemDescription)) .
-    (fcmTag .~ (Just itemGuid)) .
+    (fcmBody .~ Just itemDescription) .
+    (fcmTag .~ Just itemGuid) .
     (fcmColor .~ argFcmColor) .
     (fcmIcon .~ argFcmIcon)
   ) def

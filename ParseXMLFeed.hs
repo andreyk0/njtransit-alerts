@@ -1,6 +1,4 @@
-{-# LANGUAGE BangPatterns       #-}
 {-# LANGUAGE OverloadedStrings  #-}
-{-# LANGUAGE RecordWildCards    #-}
 
 module ParseXMLFeed (
   parseXMLFeed
@@ -23,9 +21,9 @@ parseXMLFeed bs =
       itemElems = doc ^.. root . el "rss" ./ el "channel" ./ el "item"
       items = catMaybes $ fmap parseElem itemElems
    in if null itemElems
-      then Left $ "Unable to parse any items from " <> (show doc)
-      else if (length itemElems) /= (length items)
-           then Left $ "Unable to parse all items from " <> (show itemElems)
+      then Left $ "Unable to parse any items from " <> show doc
+      else if length itemElems /= length items
+           then Left $ "Unable to parse all items from " <> show itemElems
            else Right items
 
 
