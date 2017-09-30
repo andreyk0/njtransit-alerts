@@ -31,5 +31,11 @@ filterAlertItems Args{..} !is = do
   tNow <- getCurrentTime
   let cutoffTime = addUTCTime argLookBackTime tNow
       selLineSubstr = "selLine=" <> argNJTLine <> "#"
-      p Item{..} = (itemPubDate >= cutoffTime) && T.isInfixOf selLineSubstr itemLink
+      trainSubstrs = (("#" <>) . T.pack . show) <$> argNJTTrains
+      anyTrain s = any (`T.isInfixOf` s) trainSubstrs
+
+      p Item{..} = (itemPubDate >= cutoffTime) &&
+                     T.isInfixOf selLineSubstr itemLink &&
+                     (anyTrain itemTitle || anyTrain itemDescription)
+
   return $ Set.filter p is

@@ -4,6 +4,7 @@ module Args (
 ) where
 
 
+import           Control.Applicative
 import           Data.Monoid
 import           Data.Text (Text)
 import qualified Data.Text as T
@@ -14,6 +15,7 @@ import           System.Environment
 
 data Args = Args { argVerbose :: !Bool
                  , argNJTLine :: !Text
+                 , argNJTTrains :: ![Int]
                  , argLookBackTime :: !NominalDiffTime
                  , argFcmTo :: !Text
                  , argFcmIcon :: !(Maybe Text)
@@ -34,6 +36,10 @@ parseArgs defAuthKey = Args
          ( long "nj-line"
         <> short 'l'
         <> help "NJT line abbreviation (https://www.njtransit.com/mt/mt_servlet.srv?hdnPageAction=MTNotificationsTo)." ))
+     <*> some (read <$> strOption
+         ( long "nj-train"
+        <> short 'a'
+        <> help "NJT train number"))
      <*> ((\m -> - fromIntegral (m * 60)) <$>
          (option auto
          ( long "look-back-time-minutes"
