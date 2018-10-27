@@ -11,7 +11,6 @@ import           Args
 import           Control.Lens
 import           Data.Default
 import qualified Data.Map as Map
-import           Data.Monoid
 import qualified Data.Text.Encoding as E
 import           FCMClient
 import           FCMClient.Types
@@ -30,21 +29,19 @@ fcmSendItem args@Args{..} i = do
 itemMessage :: Args
             -> Item
             -> FCMMessage
-itemMessage args@Args{..} i@Item{..} = (
-    (fcmTo .~ Just argFcmTo) .
-    (fcmNotification .~ (Just $ itemNotification args i)) .
-    (fcmData .~ (Just . Map.fromList) [("text", itemTitle <> itemDescription)]) .
-    (fcmTimeToLive .~ Just 3600) -- 1h TTL
-  ) def
+itemMessage args@Args{..} i@Item{..} =
+  def & fcmTo ?~ argFcmTo
+      & fcmNotification ?~ itemNotification args i
+      & fcmData ?~ Map.fromList [("text", itemTitle <> itemDescription)]
+      & fcmTimeToLive ?~ 3600 -- 1h TTL
 
 
 itemNotification :: Args
                  -> Item
                  -> FCMNotification
-itemNotification Args{..} Item{..} = (
-    (fcmTitle .~ (Just $ "NJT " <> itemTitle)) .
-    (fcmBody .~ Just itemDescription) .
-    (fcmTag .~ Just itemGuid) .
-    (fcmColor .~ argFcmColor) .
-    (fcmIcon .~ argFcmIcon)
-  ) def
+itemNotification Args{..} Item{..} =
+  def & fcmTitle ?~ "NJT " <> itemTitle
+      & fcmBody ?~ itemDescription
+      & fcmTag ?~ itemGuid
+      & fcmColor .~ argFcmColor
+      & fcmIcon .~ argFcmIcon

@@ -1,8 +1,9 @@
 build:
 	stack build njtransit-alerts
+	ls -1 *.hs | xargs hlint
 
 build-prof:
-	stack build --profile --ghc-options="-rtsopts" njtransit-alerts 
+	stack build --profile --ghc-options="-rtsopts" njtransit-alerts
 
 install:
 	stack install njtransit-alerts
@@ -10,11 +11,11 @@ install:
 clean:
 	stack clean
 
-tags:
-	hasktags-generate .
+hoogle:
+	stack hoogle --server
 
-sources:
-	stack-unpack-dependencies
-
-.PHONY: build build-prof clean tags sources
+.PHONY: \
+  build \
+  build-prof \
+  clean
 

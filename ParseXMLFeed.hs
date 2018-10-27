@@ -6,7 +6,6 @@ module ParseXMLFeed (
 
 import qualified Data.ByteString.Lazy as L
 import           Data.Maybe
-import           Data.Monoid
 import qualified Data.Text as T
 import           Data.Time.Format
 import           Text.XML
@@ -19,7 +18,7 @@ parseXMLFeed :: L.ByteString
 parseXMLFeed bs =
   let doc = parseLBS_ def bs
       itemElems = doc ^.. root . el "rss" ./ el "channel" ./ el "item"
-      items = catMaybes $ fmap parseElem itemElems
+      items = mapMaybe parseElem itemElems
    in if null itemElems
       then Left $ "Unable to parse any items from " <> show doc
       else if length itemElems /= length items

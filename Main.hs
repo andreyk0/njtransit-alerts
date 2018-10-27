@@ -8,7 +8,6 @@ import           Alerts
 import           Args
 import           Control.Concurrent
 import           Control.Monad
-import           Data.Monoid
 import           Data.Set (Set)
 import qualified Data.Set as Set
 import           FCM
