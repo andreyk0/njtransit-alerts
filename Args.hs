@@ -57,7 +57,7 @@ parseArgs defAuthKey = Args
      <*> optional (T.pack <$> strOption
          ( long "fcm-color"
         <> short 'C'
-        <> help "FCM notification color #rrggbb." ))
+        <> help "FCM notification color rrggbb." ))
      <*> (T.pack <$> strOption
          ( long "fcm-auth-key"
         <> short 'k'

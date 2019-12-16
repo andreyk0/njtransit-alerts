@@ -43,5 +43,5 @@ itemNotification Args{..} Item{..} =
   def & fcmTitle ?~ "NJT " <> itemTitle
       & fcmBody ?~ itemDescription
       & fcmTag ?~ itemGuid
-      & fcmColor .~ argFcmColor
+      & fcmColor .~ (("#" <>) <$> argFcmColor)
       & fcmIcon .~ argFcmIcon
